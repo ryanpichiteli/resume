@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ryan Pichiteli Mateus - Flutter Developer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap');
+
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    font-family: 'Manrope', sans-serif;
+    color: #eee;
+    overflow-x: hidden;
+    perspective: 1000px;
+  }
+
+  /* Background animated lines */
+  .background-lines {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .line {
+    position: absolute;
+    width: 200%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #6b46c1, transparent);
+    opacity: 0.1;
+    animation: slideLine 20s linear infinite;
+    filter: drop-shadow(0 0 6px #6b46c1);
+  }
+  .line:nth-child(1) {
+    top: 10%;
+    animation-delay: 0s;
+    transform-origin: left center;
+  }
+  .line:nth-child(2) {
+    top: 50%;
+    animation-delay: 7s;
+  }
+  .line:nth-child(3) {
+    top: 80%;
+    animation-delay: 14s;
+  }
+  @keyframes slideLine {
+    from { transform: translateX(-100%) skewX(-20deg); }
+    to { transform: translateX(100%) skewX(-20deg); }
+  }
+
+  /* Container */
+  .container {
+    position: relative;
+    max-width: 850px;
+    margin: 80px auto 60px;
+    background: rgba(30, 16, 58, 0.8);
+    border-radius: 20px;
+    box-shadow:
+      0 0 20px #6b46c1,
+      inset 0 0 50px #9f7aea;
+    padding: 50px 60px 60px;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  /* Glitch text effect on name */
+  .glitch {
+    font-size: 3.8rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    position: relative;
+    color: #b18aff;
+    text-transform: uppercase;
+    user-select: none;
+    animation: glitchAnim 3s infinite linear alternate;
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.7;
+  }
+  .glitch::before {
+    left: 2px;
+    text-shadow: -2px 0 #ff00c8;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    animation: glitchTop 3s infinite linear alternate;
+  }
+  .glitch::after {
+    left: -2px;
+    text-shadow: -2px 0 #00fff9;
+    clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
+    animation: glitchBottom 3s infinite linear alternate;
+  }
+
+  @keyframes glitchAnim {
+    0%, 100% { color: #b18aff; }
+    50% { color: #9f7aea; }
+  }
+  @keyframes glitchTop {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-3px, -2px); }
+  }
+  @keyframes glitchBottom {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(3px, 2px); }
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  header p {
+    font-size: 1.15rem;
+    color: #ccc;
+    margin-top: 8px;
+  }
+  header a {
+    color: #9f7aea;
+    margin: 0 12px;
+    font-weight: 700;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.4s ease;
+  }
+  header a:hover {
+    color: #b18aff;
+  }
+  header a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: #b18aff;
+    transition: width 0.3s ease;
+  }
+  header a:hover::after {
+    width: 100%;
+  }
+
+  section {
+    margin-bottom: 45px;
+    padding: 25px 30px;
+    background: rgba(48, 22, 102, 0.4);
+    border-radius: 15px;
+    box-shadow:
+      0 0 8px #6b46c1;
+    transform-style: preserve-3d;
+    perspective: 800px;
+    transition: transform 0.6s ease, box-shadow 0.4s ease;
+    cursor: default;
+  }
+  section:hover {
+    transform: rotateY(15deg) scale(1.03);
+    box-shadow:
+      0 0 40px #b18aff,
+      0 0 25px #9f7aea inset;
+  }
+
+  section h2 {
+    font-size: 1.9rem;
+    font-weight: 800;
+    margin-bottom: 18px;
+    color: #d3c0ff;
+    text-shadow: 0 0 10px #9f7aea;
+  }
+
+  ul {
+    list-style: none;
+  }
+  ul li {
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    color: #ddd;
+    position: relative;
+    padding-left: 22px;
+    transition: color 0.3s ease;
+  }
+  ul li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: #9f7aea;
+    font-weight: 900;
+    font-size: 1.2rem;
+  }
+  ul li:hover {
+    color: #b18aff;
+  }
+
+  .job-title {
+    font-weight: 900;
+    color: #c3afff;
+    font-size: 1.2rem;
+  }
+  .job-date {
+    font-style: italic;
+    color: #aaa;
+    font-size: 0.9rem;
+    margin-left: 8px;
+  }
+
+  .project-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #9f7aea;
+  }
+
+  a.link {
+    color: #b18aff;
+    font-style: italic;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a.link:hover {
+    color: #d6bbff;
+    text-decoration: underline;
+  }
+
+  /* Scroll animation for sections */
+  .hidden {
+    opacity: 0;
+    transform: translateZ(-100px) translateY(50px);
+    transition: all 0.8s ease;
+  }
+  .show {
+    opacity: 1;
+    transform: translateZ(0) translateY(0);
+  }
+
+  @media (max-width: 700px) {
+    .container {
+      padding: 30px 25px 40px;
+      margin: 40px 15px 40px;
+    }
+    .glitch {
+      font-size: 2.6rem;
+    }
+    section {
+      padding: 20px 18px;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="background-lines" aria-hidden="true">
+  <div class="line"></div>
+  <div class="line"></div>
+  <div class="line"></div>
+</div>
+
+<div class="container">
+  <header>
+    <h1 class="glitch" data-text="RYAN PICHITELI MATEUS">RYAN PICHITELI MATEUS</h1>
+    <p>Flutter Developer – Brazil (Willing to relocate to Rochester, NY)</p>
+    <p>
+      <a href="mailto:ryanpichiteli@icloud.com" class="link" target="_blank" rel="noopener noreferrer">ryanpichiteli@icloud.com</a> | 
+      <a href="https://github.com/ryanpichiteli" class="link" target="_blank" rel="noopener noreferrer">github.com/ryanpichiteli</a> | 
+      <a href="https://www.linkedin.com/in/ryan-pichiteli-mateus-68a7bb2b7/" class="link" target="_blank" rel="noopener noreferrer">linkedin.com/in/ryan-pichiteli-mateus-68a7bb2b7</a>
+    </p>
+  </header>
+
+  <section class="hidden">
+    <h2>Summary</h2>
+    <p>Brazilian Flutter developer with solid experience building and publishing mobile and web applications using Flutter, Firebase, and third-party integrations. Skilled in UI/UX design, clean architecture, and real-world product development. Strong focus on user experience, animations, and scalable code. Intermediate English level and open to international opportunities.</p>
+  </section>
+
+  <section class="hidden">
+    <h2>Skills</h2>
+    <ul>
+      <li>Languages & Frameworks: Dart, Flutter, Firebase, REST, GoRouter</li>
+      <li>State Management: Provider, Consumer</li>
+      <li>Integrations: Google Maps API, Mercado Pago, Firebase Auth</li>
+      <li>Databases: Firestore, Firebase Realtime Database</li>
+      <li>Design & Tools: Figma, CustomClipper, Git, SharedPreferences (optimized for web)</li>
+      <li>Deployment: Flutter Web, Firebase Hosting, Android release & publishing</li>
+    </ul>
+  </section>
+
+  <section class="hidden">
+    <h2>Experience</h2>
+    <p><span class="job-title">Freelance Flutter Developer</span> <span class="job-date">Remote – 2024 – Present</span></p>
+    <ul>
+      <li>Designed and developed real-world apps using Flutter, Firebase, and third-party services</li>
+      <li>Implemented e-commerce logic with authentication, shopping cart, payment integration</li>
+      <li>Built a calendar/task manager for accounting firms with date-bound assignments</li>
+      <li>Focused on animations, responsive UI, clean code, and scalability</li>
+    </ul>
+  </section>
+
+  <section class="hidden">
+    <h2>Published Projects</h2>
+    <p class="project-title">Oferta Quente (Google Play)</p>
+    <a href="https://play.google.com/store/apps/details?id=br.com.ofertaquente.oferta_quente" target="_blank" class="link" rel="noopener noreferrer">https://play.google.com/store/apps/details?id=br.com.ofertaquente.oferta_quente</a>
+    <p>Mobile app for daily promotional offers. Admin-posted deals, user login, comment system, and Firebase integration.</p>
+
+    <p class="project-title">FeiraBit (Google Play)</p>
+    <a href="https://play.google.com/store/apps/details?id=com.feirabit.br" target="_blank" class="link" rel="noopener noreferrer">https://play.google.com/store/apps/details?id=com.feirabit.br</a>
+    <p>Classified ads app with login system, real-time posting, favorites, and Firebase backend. Developed with custom UI and optimized for Android devices.</p>
+
+    <p class="project-title">Promo Bot (Node.js + Flutter Web)</p>
+    <p>Automated WhatsApp bot for affiliate offers. Uses Puppeteer, Amazon link conversion, image and data enrichment.</p>
+  </section>
+
+  <section class="hidden">
+    <h2>Education</h2>
+    <p>Technical High School in Computer Science<br />Instituto Federal do Brasil – Completed in 2024</p>
+  </section>
+
+  <section class="hidden">
+    <h2>Languages</h2>
+    <p>Portuguese: Native<br />English: Intermediate (professional use, improving for work & interviews)</p>
+  </section>
+
+  <section class="hidden">
+    <h2>Additional</h2>
+    <p>Open to remote or Rochester, NY relocation<br />iOS builds handled via CodeMagic & CI tools</p>
+  </section>
+</div>
+
+<script>
+  // Scroll reveal animations
+  const sections = document.querySelectorAll('section.hidden');
+  function revealOnScroll() {
+    const triggerBottom = window.innerHeight * 0.85;
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top < triggerBottom) {
+        section.classList.add('show');
+        section.classList.remove('hidden');
+      }
+    });
+  }
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+</script>
+
+</body>
+</html>
